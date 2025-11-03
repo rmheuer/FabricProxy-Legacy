@@ -1,7 +1,10 @@
 package one.oktw.mixin.bungee;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.mojang.authlib.properties.PropertyMap;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.server.MinecraftServer;
@@ -29,13 +32,16 @@ public abstract class ServerLoginNetworkHandlerMixin {
     @Inject(method = "onHello", at = @At(value = "TAIL"))
     private void initUuid(LoginHelloC2SPacket packet, CallbackInfo ci) {
         // override game profile with saved information:
-        this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
-
+        Multimap<String, Property> propertiesMap = HashMultimap.create();
+        
         if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
             for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                this.profile.getProperties().put(property.name(), property);
+                propertiesMap.put(property.name(), property);
             }
         }
+        
+        PropertyMap properties = new PropertyMap(propertiesMap);
+        this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.name(), properties);
     }
 
     @Redirect(method = "onHello", at = @At(value = "INVOKE",

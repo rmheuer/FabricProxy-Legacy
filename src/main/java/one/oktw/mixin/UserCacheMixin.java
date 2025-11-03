@@ -11,7 +11,7 @@ import java.util.Optional;
 @Mixin(UserCache.class)
 public class UserCacheMixin {
     @Redirect(method = "findProfileByName", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/UserCache;getOfflinePlayerProfile(Ljava/lang/String;)Ljava/util/Optional;"))
-    private static Optional<GameProfile> getOfflinePlayerProfile(String string) {
+    private Optional<GameProfile> getOfflinePlayerProfile(UserCache instance, String string) {
         return Optional.empty();
     }
 }
