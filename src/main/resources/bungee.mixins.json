@@ -4,10 +4,10 @@
   "package": "one.oktw.mixin.bungee",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ClientConnectionMixin",
-    "HandshakeC2SPacketMixin",
-    "ServerHandshakeNetworkHandlerMixin",
-    "ServerLoginNetworkHandlerMixin"
+    "ConnectionMixin",
+    "ClientIntentionPacketMixin",
+    "ServerHandshakePacketListenerImplMixin",
+    "ServerLoginPacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1

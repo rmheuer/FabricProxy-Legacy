@@ -4,9 +4,9 @@
   "package": "one.oktw.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ClientConnectionAccessor",
-    "ServerConfigHandlerMixin",
-    "UserCacheMixin"
+    "ConnectionAccessor",
+    "OldUsersConverterMixin",
+    "CachedUserNameToIdResolverMixin"
   ],
   "injectors": {
     "defaultRequire": 1
